@@ -106,7 +106,7 @@ var currentlyPlayingSong = null;
      setCurrentAlbum(albumPicasso);
      
      songListContainer.addEventListener('mouseover',function(event) {
-         
+         console.log("over");
          if (event.target.parentElement.className === 'album-view-song-item') {
              event.target.parentElement.querySelector('.song-item-number').innerHTML = playButtonTemplate;
              var songItem = getSongItem(event.target);
@@ -119,10 +119,9 @@ var currentlyPlayingSong = null;
      
      for (var i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
-         var songItem = getSongItem(event.target);
+             console.log("leave");
+             var songItem = getSongItem(event.target);
              var songItemNumber = songItem.getAttribute('data-song-number');
- 
-           
              if (songItemNumber !== currentlyPlayingSong) {
                  songItem.innerHTML = songItemNumber;
              }
@@ -152,14 +151,18 @@ albumImage.addEventListener("click", function(event) {
  };
 
 var findParentByClassName = function(element, targetClass) {
-    if (element) {
-        var currentParent = element.parentElement;
-        while (currentParent.className != targetClass && currentParent.className !== null) {
-            currentParent = currentParent.parentElement;
-        }
-        return currentParent;
-    }
-};
+   var currentElement = element;
+ 
+   while (currentElement) {
+     currentElement = currentElement.parentElement;
+ 
+     if (currentElement.className == targetClass) {
+       return currentElement;
+     }
+   }
+   
+   return null;
+ };
 
 var getSongItem = function(element) {
     switch (element.className) {
